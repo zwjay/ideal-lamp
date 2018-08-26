@@ -17,7 +17,7 @@ Sublime Text 3的下载
 Sublime Text 3的下载
 首先是编辑器的选择，我使用的是Sublime，所以之后的配置也是与之相关，当然你也可是使用其他例如Notepad++的编辑器，那么配置的话就要自己去百度一下
 打开SublimeText官网,点击DOWNLOD">
-<meta property="og:updated_time" content="2018-04-07T05:03:31.685Z">
+<meta property="og:updated_time" content="2018-08-26T19:12:21.837Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Markdown写博客入门">
 <meta name="twitter:description" content="使用Sublim Text 3编辑markdown文件开始用markdown写blog之前找了很多资料，费了很大的劲，终于是搞定了全部程序，现在分享一下！
@@ -97,19 +97,19 @@ Sublime Text 3的下载
         <h2 id="使用Sublim-Text-3编辑markdown文件"><a href="#使用Sublim-Text-3编辑markdown文件" class="headerlink" title="使用Sublim Text 3编辑markdown文件"></a>使用Sublim Text 3编辑markdown文件</h2><p>开始用markdown写blog之前找了很多资料，费了很大的劲，终于是搞定了全部程序，现在分享一下！</p>
 <h3 id="Sublime-Text-3的下载"><a href="#Sublime-Text-3的下载" class="headerlink" title="Sublime Text 3的下载"></a>Sublime Text 3的下载</h3><ol>
 <li>首先是编辑器的选择，我使用的是Sublime，所以之后的配置也是与之相关，当然你也可是使用其他例如Notepad++的编辑器，那么配置的话就要自己去百度一下</li>
-<li>打开<a href="http://www.sublimetext.com/" target="_blank" rel="external">SublimeText官网</a>,点击<strong><code>DOWNLODE FOR WINDOWS</code></strong>进行下载，或点击<strong><code>Changelog</code></strong>获取其他版本(portable version即绿色版)</li>
+<li>打开<a href="http://www.sublimetext.com/" target="_blank" rel="external">SublimeText官网</a>,点击<strong><code>DOWNLODE FOR WINDOWS</code></strong>进行下载，或点击<strong><code>Changelog</code></strong>获取其他版本(portable version为绿色版)</li>
 <li>运行.exe文件进行安装，这里就不多说</li>
 <li>接下来，土豪请付费解决，要不就百度解决</li>
 </ol>
 <hr>
-<h3 id="Sublime-Text-3的配置"><a href="#Sublime-Text-3的配置" class="headerlink" title="Sublime Text 3的配置"></a>Sublime Text 3的配置</h3><h6 id="1-安装Package-Control"><a href="#1-安装Package-Control" class="headerlink" title="1. 安装Package Control"></a>1. 安装Package Control</h6><p>按组合键<strong>Ctrl+`</strong>打开控制台，输入如下代码,回车<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">import urllib.request,os,hashlib; h = &apos;6f4c264a24d933ce70df5dedcf1dcaee&apos; + &apos;ebe013ee18cced0ef93d5f746d80ef60&apos;; pf = &apos;Package Control.sublime-package&apos;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( &apos;http://packagecontrol.io/&apos; + pf.replace(&apos; &apos;, &apos;%20&apos;)).read(); dh = hashlib.sha256(by).hexdigest(); print(&apos;Error validating download (got %s instead of %s), please try manual install&apos; % (dh, h)) if dh != h else open(os.path.join( ipp, pf), &apos;wb&apos; ).write(by)</div></pre></td></tr></table></figure></p>
+<h3 id="Sublime-Text-3的配置"><a href="#Sublime-Text-3的配置" class="headerlink" title="Sublime Text 3的配置"></a>Sublime Text 3的配置</h3><h6 id="1-安装Package-Control"><a href="#1-安装Package-Control" class="headerlink" title="1. 安装Package Control"></a>1. 安装Package Control</h6><p>按组合键<strong>Ctrl+`</strong>打开控制台，输入如下代码,回车<br>    <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">import urllib.request,os,hashlib; </div><div class="line">h = &apos;6f4c264a24d933ce70df5dedcf1dcaee&apos; + &apos;ebe013ee18cced0ef93d5f746d80ef60&apos;; </div><div class="line">pf = &apos;Package Control.sublime-package&apos;; </div><div class="line">ipp = sublime.installed_packages_path(); </div><div class="line">urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); </div><div class="line">by = urllib.request.urlopen( &apos;http://packagecontrol.io/&apos; + pf.replace(&apos; &apos;, &apos;%20&apos;)).read(); </div><div class="line">dh = hashlib.sha256(by).hexdigest(); </div><div class="line">print(&apos;Error validating download (got %s instead of %s), please try manual install&apos; % (dh, h)) if dh != h else open(os.path.join( ipp, pf), &apos;wb&apos; ).write(by)</div></pre></td></tr></table></figure></p>
 <p>如果得到<code>Package Control</code>则表示成功<br>详情请参考<a href="https://packagecontrol.io/installation" target="_blank" rel="external">官方文档</a></p>
 <h6 id="2-安装Markdown-Editing插件"><a href="#2-安装Markdown-Editing插件" class="headerlink" title="2. 安装Markdown Editing插件"></a>2. 安装Markdown Editing插件</h6><h6 id="3-安装Markdown-Preview插件"><a href="#3-安装Markdown-Preview插件" class="headerlink" title="3. 安装Markdown Preview插件"></a>3. 安装Markdown Preview插件</h6><hr>
 <h3 id="如何编辑markdown"><a href="#如何编辑markdown" class="headerlink" title="如何编辑markdown"></a>如何编辑markdown</h3>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/06/Markdown写博客入门/" data-id="cjlb43qyj0000scfaef8t0u21" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/04/06/Markdown写博客入门/" data-id="cjlb8dwbr0000fgfalk4xcst4" class="article-share-link">Share</a>
       
       
     </footer>
