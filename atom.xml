@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-09-01T10:54:17.027Z</updated>
+  <updated>2018-09-18T20:39:10.139Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Windows 10下安装CentOS双系统</title>
+    <link href="http://yoursite.com/2018/09/19/Windows-10%E4%B8%8B%E5%AE%89%E8%A3%85CentOS%E5%8F%8C%E7%B3%BB%E7%BB%9F/"/>
+    <id>http://yoursite.com/2018/09/19/Windows-10下安装CentOS双系统/</id>
+    <published>2018-09-18T16:34:47.000Z</published>
+    <updated>2018-09-18T20:39:10.139Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>本人对Linux系统一直怀着敬仰的心态，之后又想跟着一位大佬学长学习渗透来着。所以在安装双系统之前，就按他的要求在虚拟机中安装了CentOS 7系统，而且过程及其顺利。后来因为课程涉及到Linux系统，而我又不满足于虚拟机的速度，所以产生了安装双系统的想法。<br>这一路踩了几个坑，完全不像虚拟机那么轻松，这些问题网上资料又极少，找了一大圈终于算是成功安装。这篇文章不会写详细教程，因为网上实在是太多了，这里只介绍一下我遇到的几个问题，给朋友们一些参考。<br>PS:我是双硬盘安装，Windows 10用SSD作为C盘系统盘，然后我在HDD里划出一个空闲分区安装CentOS 7。</p><h2 id="基本安装"><a href="#基本安装" class="headerlink" title="基本安装"></a>基本安装</h2><p>这里不详细的介绍安装过程，但是大家可以参考这篇文章<br><a href="https://www.linuxidc.com/Linux/2016-06/132051.htm" target="_blank">https://www.linuxidc.com/Linux/2016-06/132051.htm</a><br>介绍的还算详细，我就不啰嗦了。</p><h2 id="1-刻录工具问题"><a href="#1-刻录工具问题" class="headerlink" title="1. 刻录工具问题"></a>1. 刻录工具问题</h2><p>因为之前在虚拟机安装CentOS 7的时候就是用的UltraISO（软碟通），所以这次还是用它，但是安装的时候就遇到了问题2，也就是下一个问题。开始我还一度以为是我U盘的问题，所以换了好几个U盘，但问题并没有解决。之后百度，Google了一圈，发现有人说使用UltraISO安装Linux就是容易出问题，但也有人说使用最新版的UltraISO就没有问题。所以我又换用其他几个，如USBWriter等工具，可是问题还是没有解决！直到我找到解决问题2的办法之后，使用UltraISO制作的启动盘成功安装了CentOS 7。<br>而且一些工具如USBWriter，制作启动盘之后，恢复U盘也还是个麻烦事儿。<br>所以，总结一下：<strong>UltraISO最新版貌似还是没有问题的！</strong></p><h2 id="2-无法进入图形安装界面问题"><a href="#2-无法进入图形安装界面问题" class="headerlink" title="2. 无法进入图形安装界面问题"></a>2. 无法进入图形安装界面问题</h2><p>我卡在这一步很久很久，按照上面给出的的教程，走到如下图这一步之后<br><img src="/2018/09/19/Windows-10下安装CentOS双系统/教程截图.png" alt="教程截图" title="教程截图"><br>它并没有直接进入图形界面，而是出现下面的报错，然后进入文本安装界面，一小段时间之后，出现CPU死锁的报错,无法完成安装(这张图网上找的，自己拍的没留意就给删了)</p><blockquote><p>Not asking for VNC because we don’t have a network<br>X startup failed, falling back to text mode</p></blockquote><p><img src="/2018/09/19/Windows-10下安装CentOS双系统/报错.jpg" alt="报错" title="报错"><br>直到我在centos吧翻到一篇帖子，给出了解决办法，即在修改的U盘目录后面加上<strong><code>nomodeset</code></strong>,如下示例：</p><blockquote><p>mvlinuz initrd=initrd.img inst.stage2=hd:/dev/sdc2 nomodeset quite</p></blockquote><p>然后回车，就能进入图形安装界面了</p><h2 id="3-引导的问题"><a href="#3-引导的问题" class="headerlink" title="3. 引导的问题"></a>3. 引导的问题</h2><p>安装完成之后，重启电脑。哎！怎么是Windows 10？说好的重启之后会找不到win10引导的呢？说好的CentOS 7呢？怎么都跟说好的不一样？之后我再重启电脑，进入BIOS，试着用GRUB2来启动电脑。果然！CentOS 7在这里！可是这里只有CentOS 7的启动项，没有win10啊！于是我找到下面这种方法：<br>进入CentOS 7系统，打开终端，进入root权限，执行以下命令：</p><blockquote><p># vi /etc/grub.d/40_custom</p></blockquote><p>进入文件后按a进行编辑，添加代码，结果如下：</p><blockquote><p>#!/bin/sh<br>exec tail -n +3 $0<br># This file provides an easy way to add custom menu entries. Simply type the<br># menu entries you want to add after this comment. Be careful not to change<br># the  ‘exec tail’ line above.<br>menuentry ‘Windows 10’{<br>set root=(hd0,1)<br>chainloader +1<br>}</p><p>~<br>~<br>~<br>~<br>~<br>~<br>~<br>“/etc/grub.d/40_custom” 9L,272C</p></blockquote><p>其中<strong>root</strong>中的参数<strong>hd0</strong>代表的是第一启动顺序的硬盘(在没修改BIOS启动项之前，hd0代表的即是装有win10C盘系统盘的SSD)，<strong>1</strong>代表的是此磁盘的第一个分区。<br>但我们之后是要将GRUB2更改为第一启动项的，所以，我们修改以上代码如下：</p><blockquote><p>menuentry ‘Windows 10’{<br>set root=(hd1,1)<br>chainloader +1<br>}</p></blockquote><p>修改完之后按<strong>Esc</strong>，再连按ZZ(大写)（或者<strong>Shift</strong>+<strong>:</strong>,再输入wq），保存编辑并退出。<br>然后再执行命令：</p><blockquote><p># grub2-mkconfig -o /boot/grub2/grub.cfg</p></blockquote><p>更新grub.cfg文件，最后执行</p><blockquote><p># reboot</p></blockquote><p>重启电脑，进入BIOS，修改GRUB2为第一启动项，然后保存退出，就可以看到既有CentOS 7又有Windows 10的启动项了</p><h4 id="福利"><a href="#福利" class="headerlink" title="福利"></a>福利</h4><p>Linux经典入门书籍《鸟哥的Linux私房菜-基础篇》 第四版 PDF文件<br>链接:<a href="https://pan.baidu.com/s/1EMKlLJoqsk1zIrvB-hdXwg" target="_blank">https://pan.baidu.com/s/1EMKlLJoqsk1zIrvB-hdXwg</a> 密码:as2c</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h2&gt;&lt;p&gt;本人对Linux系统一直怀着敬仰的心态，之后又想跟着一位大佬学长学习渗透来着。所以在安装双系统之前，就按他的要求在虚拟机中安装了CentOS
+      
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://yoursite.com/tags/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title>Markdown编辑博客</title>
